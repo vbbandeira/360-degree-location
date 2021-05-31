@@ -329,6 +329,20 @@ body.fullscreen-enabled.mobile #autorotateToggle {
   background-color: rgba(103,115,131,0.8);
 }
 
+#iframespot {
+  background-color: #444;
+  position: relative;
+  width: 560px;
+  height: 315px;
+}
+
+#iframespot .message {
+  text-align: center;
+  padding-top: 190px;
+  font-size: 70px;
+  color: #ddd;
+}
+
 /* Hide scene list when only a single scene exists */
 body.single-scene #sceneList, body.single-scene #sceneListToggle {
   display: none;
@@ -828,3 +842,5 @@ body.view-control-buttons .viewControlButton {
 .viewControlButton-6 {
   margin-left: 105px;
 }
+
+
