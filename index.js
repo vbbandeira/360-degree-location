@@ -1,18 +1,3 @@
-/*
- * Copyright 2016 Google Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 'use strict';
 
 (function () {
@@ -88,38 +73,23 @@
             pinFirstLevel: true
         });
 
-        //aqui fica o teste do iframe do youtube
-
         var container = scene.hotspotContainer();
 
-        container.createHotspot(document.getElementById('iframespot'), {
+        var videoHotspot = document.getElementById('iframespot');
+        videoHotspot.innerHTML = '<iframe width="580" height="335" ' +
+        'src="https://www.youtube.com/embed/DLiH5eMYCGc" title="Estant.pro" ' +
+        'frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; ' +
+        'gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        container.createHotspot(videoHotspot, {
                 yaw: -3.001189580876943,
                 pitch: -0.1483487816351552
             },
             {perspective: {radius: 1640, extraTransforms: "rotateX(5deg)"}});
 
-        var hotspotHtml = {
-            youtubeWithControls: '<iframe width="580" height="335" ' +
-                'src="https://www.youtube.com/embed/DLiH5eMYCGc" title="Estant.pro" ' +
-                'frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; ' +
-                'gyroscope; picture-in-picture" allowfullscreen></iframe>'
-        };
-
-        function switchHotspot(id) {
-            var wrapper = document.getElementById('iframespot');
-            wrapper.innerHTML = hotspotHtml[id];
-        }
-
         var switchElements = document.querySelectorAll('[data-source]');
         for (var i = 0; i < switchElements.length; i++) {
             var element = switchElements[i];
             addClickEvent(element);
-        }
-
-        function addClickEvent(element) {
-            element.addEventListener('click', function() {
-                switchHotspot('youtubeWithControls');
-            });
         }
 
         // Create link hotspots.
@@ -423,23 +393,7 @@
     // Display the initial scene.
     switchScene(scenes[0]);
 
-    var marzipanoObjects = rects.map(function (rect) {
-        // Create layer.
-        var view = new Marzipano.RectilinearView(null);
-        var textureStore = new Marzipano.TextureStore(source, stage);
-        var layer = new Marzipano.Layer(source, geometry, view, textureStore, {effects: {rect: rect}});
-
-        // Add hotspot.
-        var hotspotContainer = new Marzipano.HotspotContainer(viewer.domElement(), stage, view, viewer.renderLoop(), {rect: rect});
-        var hotspotElement = document.createElement('div');
-        hotspotElement.className = 'hotspot';
-        var hotspot = hotspotContainer.createHotspot(hotspotElement, {yaw: 0.1, pitch: -0.3});
-
-        // Add layer into stage.
-        stage.addLayer(layer);
-
-        return {layer: layer, hotspotContainer: hotspotContainer, hotspot: hotspot}
-    });
+    scenes.switchHotspot('youtubeWithControls');
 
 
 })();
